@@ -42,9 +42,9 @@
 						</v-list>
 					</v-card>
 				</v-menu>
-				<router-link v-ripple class="toolbar-items" to="/dashboard/user-profile">
-					<v-icon color>mdi-account</v-icon>
-				</router-link>
+				<!--<router-link v-ripple class="toolbar-items" to="/dashboard/user-profile">-->
+					<!--<v-icon color>mdi-account</v-icon>-->
+				<!--</router-link>-->
 
 				<v-icon class="toolbar-items" color @click="logout">mdi-power</v-icon>
 			</v-flex>
