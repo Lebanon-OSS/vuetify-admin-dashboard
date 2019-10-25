@@ -17,7 +17,7 @@ export default {
       //     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
       //     // mutation to change state properties to the values passed along
           commit('auth_success', { token, user })
-      //     resolve(response)
+          resolve()
       //   })
       //   .catch(err => {
       //     console.log('login error')
