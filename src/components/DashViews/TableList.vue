@@ -110,8 +110,8 @@ export default {
     ],
     items: [
       {
-        name: 'Dakota Rice',
-        country: 'Niger',
+        name: 'Daasdasdasd',
+        country: 'Niasdasdasdger',
         city: 'Oud-Tunrhout',
         salary: '$35,738'
       },

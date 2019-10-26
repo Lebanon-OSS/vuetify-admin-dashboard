@@ -6,25 +6,25 @@ export default {
   login ({ commit }, userData) {
     return new Promise((resolve, reject) => {
       commit('auth_request')
-      // axios.post('/auth', { username: userData.username, password: userData.password })
-      //   .then(response => {
-          const token = '123456' // response.data.access_token
-          const user = 'joe' // response.data.username
-      //     console.log(response)
-      //     // storing jwt in localStorage. https cookie is safer place to store
+      axios.post('/auth/login', { login: userData.username, password: userData.password })
+        .then(response => {
+          const token = response.data.data.token
+          const user = userData.username
+          console.log(response)
+          // storing jwt in localStorage. https cookie is safer place to store
           localStorage.setItem('token', token)
           localStorage.setItem('user', user)
-      //     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
-      //     // mutation to change state properties to the values passed along
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+          // mutation to change state properties to the values passed along
           commit('auth_success', { token, user })
-          resolve()
-      //   })
-      //   .catch(err => {
-      //     console.log('login error')
-      //     commit('auth_error')
-      //     localStorage.removeItem('token')
-      //     reject(err)
-      //   })
+          resolve(response)
+        })
+        .catch(err => {
+          console.log('login error')
+          commit('auth_error')
+          localStorage.removeItem('token')
+          reject(err)
+        })
     })
   },
   logout ({ commit }) {
@@ -71,7 +71,7 @@ export default {
           reject(error)
         })
     })
-  },
+  }
 
   // autoRefreshToken ({ commit }) {
   //   return new Promise((resolve, reject) => {
