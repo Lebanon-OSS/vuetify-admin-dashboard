@@ -79,7 +79,7 @@ export default {
         text: 'Dashboard'
       },
       {
-        to: '/dashboard/table-list',
+        to: '/dashboard/broadcasts',
         icon: 'mdi-clipboard-outline',
         text: 'Broadcast'
       },

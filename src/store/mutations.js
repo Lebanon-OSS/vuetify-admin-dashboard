@@ -18,5 +18,8 @@ export default {
   },
   setTableList (state, tableList) {
     state.tableList = tableList
+  },
+  setBroadcasts (state, data) {
+    state.broadcasts = data
   }
 }

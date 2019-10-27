@@ -78,6 +78,14 @@ export default [
         component: () => import(`@/components/DashViews/UsersTable.vue`)
       },
       {
+          path: 'broadcasts',
+          meta: {
+              name: 'broadcasts',
+              requiresAuth: true
+          },
+          component: () => import(`@/components/DashViews/Broadcasts.vue`)
+      },
+      {
         path: 'tablestest',
         meta: {
           name: 'Complex Tables test',

@@ -59,6 +59,23 @@ export default {
       })
       .catch(error => console.log(error))
   },
+    getBroadcasts ({ commit }) {
+        axios.get('/broadcast/all')
+            .then(response => {
+                let res = response.data;
+                // console.log(res)
+                let data = [];
+                for (let i = 0; i < res.length; i++) {
+                    data.push({title: res[i].title, body: res[i].body, desc: res[i].description, id: res[i]._id})
+                }
+
+                commit('setBroadcasts',  data )
+            })
+            .catch(error => {
+                console.log('getBroadcasts error')
+                console.log(error)
+            })
+    },
   updateTableItem ({ commit }, tableData) {
     return new Promise((resolve, reject) => {
       let httpmethod = tableData.method
