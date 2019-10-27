@@ -33,7 +33,7 @@
                   color="general"
                   dark
                   class="mb-2"
-                  v-on="on">New Item</v-btn>
+                  v-on="on">New Broadcast</v-btn>
               </template>
 
               <v-card>
@@ -41,42 +41,32 @@
                   <v-container grid-list-md >
                     <v-layout wrap>
                       <v-flex
-                        xs12
-                        sm6
-                        md4>
+                        xs12>
                         <v-text-field
-                          v-model="editedItem.username"
-                          label="Username" />
+                          v-model="editedItem.title"
+                          label="Title" />
                       </v-flex>
                       <v-flex
-                        xs12
-                        sm6
-                        md4>
+                        xs12>
                         <v-text-field
-                          v-model="editedItem.password"
-                          label="Password" />
+                          v-model="editedItem.body"
+                          label="Body" />
                       </v-flex>
                       <v-flex
-                        xs12
-                        sm6
-                        md4>
+                        xs12>
                         <v-text-field
-                          v-model="editedItem.email"
-                          label="Email"/>
+                          v-model="editedItem.desc"
+                          label="Description"/>
                       </v-flex>
-                      <v-flex
-                        xs12
-                        sm6
-                        md4>
-                        <v-checkbox v-model="checkboxAdmin" :label="`IsAdmin`"></v-checkbox>
+                      <!--<v-flex-->
+                        <!--xs12>-->
+                        <!--<v-checkbox v-model="checkboxAdmin" :label="`IsAdmin`"></v-checkbox>-->
 
-                      </v-flex>
-                      <v-flex
-                        xs12
-                        sm6
-                        md4>
-                        <v-checkbox v-model="checkboxActive" :label="`IsActive`"></v-checkbox>
-                      </v-flex>
+                      <!--</v-flex>-->
+                      <!--<v-flex-->
+                        <!--xs12>-->
+                        <!--<v-checkbox v-model="checkboxActive" :label="`IsActive`"></v-checkbox>-->
+                      <!--</v-flex>-->
                     </v-layout>
                   </v-container>
                 </v-card-text>
@@ -113,66 +103,44 @@
                 />
               </template>
               <template v-slot:items="props">
-                <td>{{ props.item.id }}</td>
+                <td @click="editItem(props.item)" :style="{ cursor: 'pointer'}">{{ props.item.id }}</td>
+                <td @click="editItem(props.item)" :style="{ cursor: 'pointer'}">{{ props.item.title }}</td>
+                
+                <!--<td>-->
+                  <!--<v-edit-dialog-->
+                    <!--:return-value.sync="props.item.body"-->
+                    <!--large-->
+                    <!--lazy-->
+                    <!--persistent-->
+                    <!--@save="save"-->
+                    <!--@cancel="cancelInline"-->
+                    <!--@open="openInline"-->
+                    <!--@close="closeInline"-->
+                  <!--&gt; -->
+                  <!--<div ></div>-->
+                    <td  @click="editItem(props.item)" :style="{ cursor: 'pointer'}">{{ props.item.body }}</td>
+                      <!--<v-text-field-->
+                        <!--v-model="props.item.body"-->
+                        <!--:rules="[max25chars]"-->
+                        <!--label="Edit"-->
+                        <!--single-line-->
+                        <!--counter-->
+                        <!--autofocus-->
+                        <!--@click="editItem(props.item)"-->
+                      <!--/>-->
+
+                  <!--</v-edit-dialog>-->
+                <!--</td>               -->
+                <td @click="editItem(props.item)" :style="{ cursor: 'pointer'}">{{ props.item.desc }}</td>
                 <!--<td class="justify-center ">-->
                   <!--<v-icon-->
-                    <!--medium-->
-                    <!--class="mr-2"-->
-                    <!--@click="editItem(props.item)">edit</v-icon>-->
+                          <!--medium-->
+                          <!--class="mr-2"-->
+                          <!--@click="editItem(props.item)">edit</v-icon>-->
                   <!--<v-icon-->
-                    <!--medium-->
-                    <!--@click="deleteItem(props.item)">delete</v-icon>-->
+                          <!--medium-->
+                          <!--@click="deleteItem(props.item)">delete</v-icon>-->
                 <!--</td>-->
-                <td>
-                  <v-edit-dialog
-                    :return-value.sync="props.item.title"
-                    large
-                    lazy
-                    persistent
-                    @save="saveInline"
-                    @cancel="cancelInline"
-                    @open="openInline"
-                    @close="closeInline"
-                  > 
-                  <div>{{ props.item.title }}</div>
-                    <template v-slot:input>
-                      <v-text-field
-                        v-model="props.item.username"
-                        :rules="[max25chars]"
-                        label="Edit"
-                        single-line
-                        counter
-                        autofocus
-                      />
-                    </template>
-                  </v-edit-dialog>
-                </td> 
-                
-                <td>
-                  <v-edit-dialog
-                    :return-value.sync="props.item.body"
-                    large
-                    lazy
-                    persistent
-                    @save="save"
-                    @cancel="cancelInline"
-                    @open="openInline"
-                    @close="closeInline"
-                  > 
-                  <div>{{ props.item.body }}</div>
-                    <template v-slot:input>
-                      <v-text-field
-                        v-model="props.item.email"
-                        :rules="[max25chars]"
-                        label="Edit"
-                        single-line
-                        counter
-                        autofocus
-                      />
-                    </template>
-                  </v-edit-dialog>
-                </td>               
-                <td class="">{{ props.item.desc }}</td>
                 <!--<td class="">{{ props.item.isActive }}</td>-->
                 <!--<td class="">{{ props.item.lastSeen }}</td>-->
                 <!--<td v-show = false>{{ props.item.password }}</td>  -->
@@ -207,7 +175,7 @@ export default {
     UserList: [],
     checkboxAdmin: true,
     checkboxActive: true,
-    rowsAmount: [15,20,25,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}],
+    rowsAmount: [5,20,25,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}],
     dialog: false,
     search: '',
     headers: [
@@ -220,15 +188,11 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
-      username: '',
-      password: '',
-      email: '',
-      isAdmin : true,
-      isActive : true,
+      title: '',
+      body: '',
+      desc: ''
     },
-    defaultItem: {
-
-    }
+    defaultItem: {}
   }),
 
   computed: {
@@ -322,10 +286,10 @@ export default {
       } else {
         let tableItem = this.editedItem
         this.UserList.push(this.editedItem)
-        let endpoint = `users/new-user`
+        let endpoint = `broadcast/add`
         let method = 'post'
         this.$store.dispatch('updateTableItem', {endpoint, tableItem, method})
-        .then((response) => console.log('new user'))
+        .then((response) => this.saveInline(), this.$store.dispatch('getBroadcasts'))
         .catch(error =>{ 
           console.log(error)
           this.cancelInline
